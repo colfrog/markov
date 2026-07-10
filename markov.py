@@ -20,15 +20,16 @@ class Markov:
         else:
             self.historique[mots] = [mot_a_ajouter]
 
+    def retirer_mot(self, mots):
+        return random.choice(self.historique[mots])
+
     def lire_fichier(self, chemin):
         with open(chemin, 'r', encoding='utf8') as f:
             self.lire(f.read())
 
     def nettoyer_texte(self, texte):
-        texte = texte.replace('\n\n', ' ')
-        texte = texte.replace('\r\n\r\n', ' ')
         texte = texte.replace('\n', ' ')
-        texte = texte.replace('\r\n', ' ')
+        texte = texte.replace('\r', ' ')
         texte = texte.lower()
         return texte
 
@@ -44,9 +45,6 @@ class Markov:
             if '.' in mot:
                 self.ajouter_a_historique(mots, '.')
                 mots = ('', '')
-
-    def retirer_mot(self, mots):
-        return random.choice(self.historique[mots])
 
     def generer_phrase(self, debut=None):
         mots = ['', ''] if debut is None else ['', debut]
